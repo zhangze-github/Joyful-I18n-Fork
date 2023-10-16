@@ -14,8 +14,8 @@
             <div class="center">
                 <a-input v-model:value="keyValue" disabled v-if="props.isEditI18n"/>
                 <a-input-group compact v-else>
-                    <a-input v-model:value="qianzhui" style="width: 50%" disabled/>
-                    <a-input v-model:value="keyValue" style="width: 50%" />
+                    <!-- <a-input v-model:value="qianzhui" style="width: 50%" disabled/> -->
+                    <a-input v-model:value="keyValue" style="width: 100%" />
                 </a-input-group>
             </div>
             <div class="right">
@@ -74,7 +74,8 @@ watch(() => props.open, () => {
         let obj = {};
         storage.fileList.forEach(item => {
             let {key} = item;
-            let currentValue = get(find(storage.fileList, {key}), `content.${props.editKey}`, '')
+            let currentValue = get(find(storage.fileList, {key}), `content`, {})
+            currentValue = currentValue[props.editKey] || ''
             obj[item.key] = isString(currentValue) ? currentValue : '';
         })
         langValue.value = obj
@@ -102,16 +103,20 @@ function handleOk() {
             message.error('key不能为空')
             return;
         }
-        if(value.includes('.')){
-            message.error('key不能包含.符号')
-            return;
-        }
-        key = qianzhui.value + value
+        // if(value.includes('.')){
+        //     message.error('key不能包含.符号')
+        //     return;
+        // }
+        key = value
     }
 
     let list = toRaw(storage.fileList)
     list.map(item => {
-        set(item, `content.${key}`, langValue.value[item.key])
+        item.content = {
+            ...item.content,
+            [key]: langValue.value[item.key]
+        }
+        // set(item, `content.${key}`, langValue.value[item.key])
     })
     storage.$patch({
         fileList: list

@@ -136,7 +136,10 @@ function handleCancel() {
 }
 
 function addRootKey(){
-    modalVisible.value = '';
+    // modalVisible.value = '';
+    isEditI18n.value = false;
+    editKey.value = ''
+    drawerVisible.value = true;
 }
 
 function deleteItem(e){
