@@ -147,13 +147,13 @@ async function translation(key) {
 
 function copy() {
     let value = keyValue.value
-    if(props.isEditI18n){
+    // if(props.isEditI18n){
         CopyToClipboardw(keyValue.value)
         message.success('已复制Key：' + keyValue.value)
-    }else{
-        CopyToClipboardw(qianzhui.value + trim(keyValue.value))
-        message.success('已复制Key：' + qianzhui.value + trim(keyValue.value))
-    }
+    // }else{
+    //     CopyToClipboardw(trim(keyValue.value))
+    //     message.success('已复制Key：' + qianzhui.value + trim(keyValue.value))
+    // }
 }
 
 </script>
